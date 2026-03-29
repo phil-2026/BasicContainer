@@ -22,3 +22,30 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Ignore ALL build output (Gradle)
+# 1. Ignore all compiled output
+build/
+bin/
+out/
+
+# 2. Ignore local Gradle settings (Argo CD will use its own)
+.gradle/
+configuration/
+
+# 3. Ignore IDE-specific metadata (VS Code / IntelliJ / Eclipse)
+.project
+.classpath
+.settings/
+.idea/
+*.iml
+*.iws
+.vscode/
+
+# 4. Ignore OS-specific "clutter"
+Thumbs.db
+.DS_Store
+
+# 5. Log files
+*.log
+
