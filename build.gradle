@@ -7,7 +7,7 @@ plugins {
 group = 'com.johnsonstuff'
 // @todo: Move to using gradle release plugsin and remove manual -SNAPSHOT suffix 
 //version = '0.0.1-SNAPSHOT'
-version = '0.0.2'
+version = '0.1.0'
 
 java {
 	toolchain {
@@ -21,9 +21,12 @@ repositories {
 }
 
 dependencies {
+        // This contains JUnit 5 (Jupiter), Assertions, and the Test Engine
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'	
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
