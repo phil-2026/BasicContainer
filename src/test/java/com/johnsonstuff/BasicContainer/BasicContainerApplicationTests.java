@@ -1,13 +1,18 @@
 package com.johnsonstuff.BasicContainer;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
 class BasicContainerApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
-
+    @Test
+    void testHelloMethodDirectly() {
+        // We are just treating this as a regular Java Class. 
+        // No Spring Boot magic involved.
+        BasicContainerApplication app = new BasicContainerApplication();
+        
+        String result = app.hello("Phil");
+        
+        assertEquals("Hello Phil!", result);
+    }
 }
