@@ -1,11 +1,11 @@
 # BasicContainer
 This is a Basic K8s Deployable SpringBoot App Deployment Demo
 
-## **\#\# Project Overview: BasicContainer**
+## **Project Overview: BasicContainer**
 
 **BasicContainer** is a cloud-native demonstration of a high-performance Java 25 microservice, integrated into a complete **GitOps CI/CD pipeline**. The project showcases the transition from legacy infrastructure to a modern, containerized deployment using **Spring Boot 4.0.5**, **GitHub Actions**, **GHCR**, and **Argo CD**.
 
-### **\#\#\# Core Technology Stack**
+### **Core Technology Stack**
 
 * **Language/Runtime:** Java 25 (LTS Candidate) on Oracle Linux 9\.  
 * **Framework:** Spring Boot 4.0.5 (Bleeding Edge).  
@@ -16,9 +16,9 @@ This is a Basic K8s Deployable SpringBoot App Deployment Demo
 
 ---
 
-## **\#\# Architectural Setup & Workflow**
+## **Architectural Setup & Workflow**
 
-### **\#\#\# 1\. Continuous Integration (GitHub Actions)**
+### 1\. **Continuous Integration (GitHub Actions)**
 
 The pipeline is defined in .github/workflows/gradle.yml and performs the following:
 
@@ -29,7 +29,7 @@ The pipeline is defined in .github/workflows/gradle.yml and performs the followi
   * **Static/Release Tags:** Currently using 003 for immutable deployments.  
   * **Rolling Tags:** Maintaining latest for rapid development cycles.
 
-### **\#\#\# 2\. Containerization (Dockerfile)**
+### 2\. **Containerization (Dockerfile)**
 
 The Dockerfile is optimized for the **Oracle Linux 9** ecosystem:
 
@@ -37,7 +37,7 @@ The Dockerfile is optimized for the **Oracle Linux 9** ecosystem:
 * **Artifact Alignment:** Specifically copies build/libs/BasicContainer-0.1.0.jar to ensure the container version matches the Gradle project version.  
 * **Network:** Exposes port 8080 for standard Spring Boot web traffic.
 
-### **\#\#\# 3\. Kubernetes Orchestration (Helm & Argo CD)**
+### 3\. **Kubernetes Orchestration (Helm & Argo CD)**
 
 The deployment is managed via a custom Helm chart located in /charts/spring-app:
 
@@ -47,7 +47,7 @@ The deployment is managed via a custom Helm chart located in /charts/spring-app:
 
 ---
 
-## **\#\# Key Solved Challenges (Interview Talking Points)**
+## **Key Solved Challenges (Interview Talking Points)**
 
 * **Java 25 Stability:** Successfully identified and bypassed ByteBuddy and Mockito incompatibilities with JDK 25 by implementing a "Brute Force" POJO testing strategy. This ensured CI gates remained green while using bleeding-edge runtimes.  
 * **Registry Authentication:** Implemented secure image pulls from a private GHCR repository using Kubernetes secrets, moving beyond local-only image storage.  
@@ -55,9 +55,14 @@ The deployment is managed via a custom Helm chart located in /charts/spring-app:
 
 ---
 
-### **\#\#\# Final Project Stats**
+### **Final Project Stats**
 
 * **Current App Version:** 0.1.0.  
 * **Current Chart Version:** 0.1.1.  
 * **Verified Digest:** sha256:007be3c1dd141bd26fe1f87947f7788cb2fbc99b788bd5d76d8992401ef465b1.
+
+------
+### SEE ALSO
+1. Kubernetes Setup (..Coming Soon)
+2. ArgoCD (..Coming Soon)
 
