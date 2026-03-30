@@ -16,7 +16,7 @@ on:
 # Top-level permissions apply to all jobs in this file
 permissions:
   contents: read
-  packages: write   
+  packages: write
 
 jobs:
   build:
@@ -56,7 +56,7 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Login to GitHub Container Registry
+    - name: Log in to GHCR
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
@@ -64,14 +64,26 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build and push
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: true
-        # This tags it as 'latest' and also uses the Git SHA for versioning (Good DevOps practice)
-        tags: |
-          ghcr.io/phil-2026/basiccontainer:latest
-          ghcr.io/phil-2026/basiccontainer:${{ github.sha }}    
+      run: |
+        docker build -t ghcr.io/${{ github.actor }}/basiccontainer:latest .
+        docker push ghcr.io/${{ github.actor }}/basiccontainer:latest
+        
+    #- name: Login to GitHub Container Registry
+    #  uses: docker/login-action@v3
+    #  with:
+    #    registry: ghcr.io
+    #    username: ${{ github.actor }}
+    #    password: ${{ secrets.GITHUB_TOKEN }}
+
+    #- name: Build and push
+    #  uses: docker/build-push-action@v5
+    #  with:
+    #    context: .
+    #    push: true
+    #    # This tags it as 'latest' and also uses the Git SHA for versioning (Good DevOps practice)
+    #    tags: |
+    #      ghcr.io/phil-2026/basiccontainer:latest
+    #      ghcr.io/phil-2026/basiccontainer:${{ github.sha }}    
 
   dependency-submission:
 
