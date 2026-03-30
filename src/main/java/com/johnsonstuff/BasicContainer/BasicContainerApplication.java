@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BasicContainerApplication {
 
+    // This is the main entry point for the Spring Boot application.
 	public static void main(String[] args) {
 		SpringApplication.run(BasicContainerApplication.class, args);
 	}

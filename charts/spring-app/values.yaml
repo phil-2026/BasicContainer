@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: ghcr.io/phil-2026/basiccontainer
   pullPolicy: Always
-  tag: "latest"
+  tag: "003"
 
 service:
   type: NodePort
