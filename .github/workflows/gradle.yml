@@ -13,6 +13,11 @@ on:
   pull_request:
     branches: [ "main" ]
 
+# Top-level permissions apply to all jobs in this file
+permissions:
+  contents: read
+  packages: write   
+
 jobs:
   build:
     runs-on: ubuntu-latest
