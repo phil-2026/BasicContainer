@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: write   # Required to push to GitHub Container Registry (GHCR)
 
     steps:
     - uses: actions/checkout@v4
