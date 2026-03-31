@@ -76,7 +76,7 @@ jobs:
     # @TODO: FIX This to use better tagging strategy (e.g., GitHub Actions "GITHUB_RUN_NUMBER" or "GITHUB_REF_NAME" for branch-based tagging)
     - name: Build and push
       run: |
-        TAG="004"  # For simplicity, using a static tag here. In production, consider using dynamic tags (e.g., Git SHA or version numbers).
+        TAG="005"  # For simplicity, using a static tag here. In production, consider using dynamic tags (e.g., Git SHA or version numbers).
         IMAGE_NAME=ghcr.io/${{ github.actor }}/basiccontainer
         docker build -t $IMAGE_NAME:$TAG -t $IMAGE_NAME:latest .
         docker push $IMAGE_NAME:$TAG

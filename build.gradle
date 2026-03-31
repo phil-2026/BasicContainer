@@ -7,7 +7,7 @@ plugins {
 group = 'com.johnsonstuff'
 // @todo: Move to using gradle release plugsin and remove manual -SNAPSHOT suffix 
 //version = '0.0.1-SNAPSHOT'
-version = '0.1.0'
+version = '0.1.1'
 
 java {
 	toolchain {
