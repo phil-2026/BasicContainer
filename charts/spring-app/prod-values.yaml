@@ -2,7 +2,7 @@ replicaCount: 2          # Scale up for "Production"
 image:
   repository: ghcr.io/phil-2026/basiccontainer
   pullPolicy: Always
-  tag: "003"             # Use the verified "003" tag from your CI build
+  tag: "005"             # Use the verified "003" tag from your CI build
 
 service:
   type: NodePort
