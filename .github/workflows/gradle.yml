@@ -73,9 +73,10 @@ jobs:
     # This creates a unique tag for each commit, which is a good practice for versioning container images in CI/CD pipelines.
     # ...however, it also creates a "multi-check-in procedure"
     #    TAG=$(echo ${{ github.sha }} | cut -c1-7)
+    # @TODO: FIX This to use better tagging strategy (e.g., GitHub Actions "GITHUB_RUN_NUMBER" or "GITHUB_REF_NAME" for branch-based tagging)
     - name: Build and push
       run: |
-        TAG="003"  # For simplicity, using a static tag here. In production, consider using dynamic tags (e.g., Git SHA or version numbers).
+        TAG="004"  # For simplicity, using a static tag here. In production, consider using dynamic tags (e.g., Git SHA or version numbers).
         IMAGE_NAME=ghcr.io/${{ github.actor }}/basiccontainer
         docker build -t $IMAGE_NAME:$TAG -t $IMAGE_NAME:latest .
         docker push $IMAGE_NAME:$TAG
