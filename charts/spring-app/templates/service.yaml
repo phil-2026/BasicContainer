@@ -7,6 +7,6 @@ spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 8080
-      nodePort: 30080  # Hardcoding for local easy access
+      nodePort: {{ .Values.service.nodePort }} # Need to override in various environments
   selector:
     app: spring-app

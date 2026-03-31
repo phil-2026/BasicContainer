@@ -3,8 +3,10 @@ replicaCount: 1
 image:
   repository: ghcr.io/phil-2026/basiccontainer
   pullPolicy: Always
-  tag: "003"
+  tag: "004"
 
 service:
   type: NodePort
   port: 8080
+  nodePort: 30080  # 30080 default
+
