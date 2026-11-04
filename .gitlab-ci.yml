@@ -1,9 +1,18 @@
 stages:
+  - compile
   - test
+
+compile_code:
+  stage: compile
+  # Use a Gradle 9 image built on top of JDK 25
+  image: gradle:9.4.1-jdk25 
+  variables:
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  script:
+    - gradle check
 
 test_job:
   stage: test
   script:
     - echo "Hello from GitLab Runner on EKS Fargate!! (Cluster 2) - Test 2"
     #- kubectl version --client
-
