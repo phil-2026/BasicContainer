@@ -3,7 +3,7 @@ stages:
   - test
   - build_image
 
-compile_code:
+compile_code_job:
   stage: compile
   # Use a Gradle 9 image built on top of JDK 25
   image: gradle:9.4.1-jdk25 
@@ -19,7 +19,7 @@ test_job:
     #- kubectl version --client
 
 # Step 2: Containerization via Kaniko on your EKS GitLab Runner
-build_image:
+build_image_job:
   stage: build_image
   image:
     name: gcr.io/kaniko-project/executor:v1.22.0-debug
