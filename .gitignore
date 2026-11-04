@@ -1,6 +1,8 @@
 # Local Dev + Local Misc
 _keep_local/
 _keep_local/*
+Extra/*
+Extra/
 
 # Compiled class file
 *.class

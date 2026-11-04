@@ -1,0 +1,38 @@
+stages:
+  - compile
+  - test
+  - build_image
+
+compile_code_job:
+  stage: compile
+  # Use a Gradle 9 image built on top of JDK 25
+  image: gradle:9.4.1-jdk25 
+  variables:
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  script:
+    - gradle check
+
+test_job:
+  stage: test
+  script:
+    - echo "Hello from GitLab Runner on EKS Fargate!! (Cluster 2) - Test 2"
+    #- kubectl version --client
+
+# Step 2: Containerization via Kaniko on your EKS GitLab Runner
+build_image_job:
+  stage: build_image
+  image:
+    name: gcr.io/kaniko-project/executor:v1.22.0-debug
+    entrypoint: [""]
+  script:
+    # Set up the credentials folder
+    - mkdir -p /kaniko/.docker
+    
+    # Generate the base64 auth config dynamically for the GitLab built-in registry
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(printf "%s:%s" "$CI_REGISTRY_USER" "$CI_REGISTRY_PASSWORD" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    
+    # Execute Kaniko, targeting your specific named Dockerfile
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile.beta"
+      --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}"

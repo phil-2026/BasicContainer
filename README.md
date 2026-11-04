@@ -47,7 +47,7 @@ The deployment is managed via a custom Helm chart located in /charts/spring-app:
 
 ---
 
-## **Key Solved Challenges (Interview Talking Points)**
+## **Key Solved Challenges (Discussion Talking Points)**
 
 * **Java 25 Stability:** Successfully identified and bypassed ByteBuddy and Mockito incompatibilities with JDK 25 by implementing a "Brute Force" POJO testing strategy. This ensured CI gates remained green while using bleeding-edge runtimes.  
 * **Registry Authentication:** Implemented secure image pulls from a private GHCR repository using Kubernetes secrets, moving beyond local-only image storage.  
@@ -65,4 +65,10 @@ The deployment is managed via a custom Helm chart located in /charts/spring-app:
 ### SEE ALSO
 1. Kubernetes Setup (..Coming Soon)
 2. ArgoCD (..Coming Soon)
+
+
+---
+
+### Repository Download
+https://github.com/phil-2026/BasicContainer
 
