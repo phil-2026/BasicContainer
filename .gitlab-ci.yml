@@ -4,5 +4,6 @@ stages:
 test_job:
   stage: test
   script:
-    - echo "Hello from GitLab Runner on EKS Fargate!! (Cluster 2)"
-    - kubectl version --client
+    - echo "Hello from GitLab Runner on EKS Fargate!! (Cluster 2) - Test 2"
+    #- kubectl version --client
+
