@@ -1,0 +1,25 @@
+# --- Stage 1: Build the application securely inside EKS ---
+FROM gradle:9.4.1-jdk25 AS builder
+WORKDIR /app
+
+# 1. Cache dependencies (speeds up subsequent builds)
+COPY build.gradle settings.gradle /app/
+RUN gradle dependencies --no-daemon || true
+
+# 2. Copy the actual source code and compile the JAR
+COPY src /app/src
+RUN gradle build -x test --no-daemon
+
+# --- Stage 2: Create the final lightweight production image ---
+FROM eclipse-temurin:25-jre-alpine
+WORKDIR /app
+
+# 3. Pull the compiled JAR directly out of the builder stage
+# (This solves the missing file issue on the EKS runner)
+COPY --from=builder /app/build/libs/BasicContainer-0.1.1.jar app.jar
+
+# 4. Expose the standard Spring Boot port
+EXPOSE 8080
+
+# 5. Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
