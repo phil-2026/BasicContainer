@@ -6,7 +6,7 @@ image:
   tag: "008"
 
 imagePullSecrets:
-  - name: ghcr-secret
+  - name: github-pull-secret
 
 service:
   type: NodePort
