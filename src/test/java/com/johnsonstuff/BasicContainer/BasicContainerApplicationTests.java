@@ -13,6 +13,6 @@ class BasicContainerApplicationTests {
         
         String result = app.hello("Phil");
         
-        assertEquals("Hello Phil! Welcome to the Cross-Project-Demo!", result);
+        assertEquals("Hello Phil! Welcome to the Cross-Project-Demo(2)!", result);
     }
 }

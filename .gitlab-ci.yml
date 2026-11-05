@@ -2,6 +2,7 @@ stages:
   - compile
   - test
   - build_image
+  - sbom
 
 compile_code_job:
   stage: compile
@@ -11,9 +12,15 @@ compile_code_job:
     GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   script:
     - gradle check
+    - gradle bootJar --no-daemon
+    # --- Debug Step to Inspect Artifact Path ---
+    - echo "Checking Gradle output directory:"
+    - ls -la build/libs/
+    - find . -name "*.jar"
 
 test_job:
   stage: test
+  # Use whatever default Image was setup by EKS Administration / Orchestration  (Values of: gitlab-runner)
   script:
     - echo "Hello from GitLab Runner on EKS Fargate!! (Cluster 2) - Test 2"
     #- kubectl version --client
@@ -36,3 +43,26 @@ build_image_job:
       --context "${CI_PROJECT_DIR}"
       --dockerfile "${CI_PROJECT_DIR}/Dockerfile.beta"
       --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}"
+
+# Step 3: SBOM Creation
+#      Note:  anchore/syft:latest does not have a shell (bash, sh), but we need one.  
+#      ** I'll open a bug for their maintainer.
+generate_sbom_job:
+  stage: sbom
+  image:
+    name: alpine:latest
+  script:
+    - echo "Installing Syft..."
+    - apk add --no-cache curl tar
+    - mkdir -p /root/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(printf "%s:%s" "$CI_REGISTRY_USER" "$CI_REGISTRY_PASSWORD" | base64 | tr -d '\n')\"}}}" > /root/.docker/config.json
+    - curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+    - echo "Generating SBOM for image ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}"
+    - syft "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}" -o cyclonedx-json=sbom-cyclonedx.json
+    - syft "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}" -o syft-text=sbom-summary.txt
+  artifacts:
+    name: "sbom-${CI_COMMIT_SHA}"
+    expire_in: 30 days
+    paths:
+      - sbom-cyclonedx.json
+      - sbom-summary.txt
