@@ -1,6 +1,7 @@
 package com.johnsonstuff.BasicContainer;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,14 +12,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BasicContainerApplication {
 
+    private final BuildProperties buildProperties;
+    
     // This is the main entry point for the Spring Boot application.
 	public static void main(String[] args) {
 		SpringApplication.run(BasicContainerApplication.class, args);
 	}
+    
+    public BasicContainerApplication(BuildProperties buildProperties) {
+        this.buildProperties = buildProperties;
+    }
 
     @GetMapping("/hello")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-      return String.format("Hello %s! Welcome to the Cross-Project-Demo(4)!", name);
+      //return String.format("Hello %s! Welcome to the Cross-Project-Demo(4)!", name);
+
+        return String.format(
+            "Hello %s! Welcome to Cross-Project-Demo (v%s)!",
+            name,
+            buildProperties.getVersion()
+        );
+
     }
 
 }
