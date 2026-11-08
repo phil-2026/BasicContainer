@@ -96,6 +96,7 @@ jobs:
         echo "Building Docker image for application version: $VERSION"
         IMAGE_NAME=ghcr.io/${{ github.actor }}/basiccontainer
         docker build \
+           --build-arg APP_VERSION="$VERSION" \
            -t $IMAGE_NAME:$VERSION \
            -t $IMAGE_NAME:latest \
         .
