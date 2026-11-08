@@ -4,7 +4,7 @@ FROM container-registry.oracle.com/java/openjdk:25-oraclelinux9
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the JAR from your Windows host (I:\projects\...) into the container
+# Copy the JAR from your build host (<root>\projects\..\BasicContainer\) into the container
 # Ensure this matches your gradle build output exactly
 COPY build/libs/BasicContainer-0.2.8.jar app.jar
 
