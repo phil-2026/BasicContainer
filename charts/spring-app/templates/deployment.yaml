@@ -13,7 +13,7 @@ spec:
         app: spring-app
     spec:
       imagePullSecrets:
-        - name: github-pull-secret    
+        - name: github-pull-secret
       containers:
         - name: spring-app
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

@@ -2,12 +2,11 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.0.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'net.researchgate.release' version '3.2.0'
 }
 
 group = 'com.johnsonstuff'
-// @todo: Move to using gradle release plugsin and remove manual -SNAPSHOT suffix 
-// version = '0.0.1-SNAPSHOT'
-version = '0.2.3'
+// Note: (version) Recently Moved to 'net.researchgate.release' plugin
 
 java {
 	toolchain {
@@ -28,6 +27,39 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+
+// Ensure standard tasks like jar or publishing run during the release phase
+afterReleaseBuild.dependsOn tasks.named('build') 
+
+release {
+    // Defines the prefix added before the version number in Git
+    tagTemplate = 'release-${version}'
+
+    failOnCommitNeeded = true          // Fails if you have uncommitted local files
+    failOnPublishNeeded = true         // Fails if local artifacts haven't been built
+    failOnSnapshotDependencies = true  // Crucial: ensures no -SNAPSHOT dependencies sneak into production
+    failOnUnversionedFiles = true      // Fails if there are untracked files in Git
+    
+    // Automatically pushes tags and version bumps to your remote repository
+    pushReleaseVersionBranch = 'main' 
+
+    git {
+        requireBranch.set('main')      // Restricts releases to your 'main' or 'master' branch
+        pushToRemote.set('origin')     // The remote tracking branch
+    }
+}
+
+tasks.register('notifyReleaseSuccess') {
+    doLast {
+        println "🎉 Release complete and pushed to remote!"
+    }
+}
+
+// Hook notifyReleaseSuccess to run at the absolute end of the release task chain
+tasks.named('release') {
+    finalizedBy 'notifyReleaseSuccess'
 }
 
 tasks.named('test') {
