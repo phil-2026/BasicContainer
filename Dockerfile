@@ -6,7 +6,8 @@ WORKDIR /app
 
 # Copy the JAR from your build host (<root>\projects\..\BasicContainer\) into the container
 # Ensure this matches your gradle build output exactly
-COPY build/libs/BasicContainer-0.2.12.jar app.jar
+# @todo: Fix this manual inclusion. (Create Template)
+COPY build/libs/BasicContainer-0.2.14.jar app.jar
 
 # Expose the Spring Boot default port
 EXPOSE 8080
