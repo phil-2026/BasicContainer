@@ -72,7 +72,7 @@ jobs:
       run: |
         ls -larst
         ls -larst build
-        ls -larst build\libs
+        ls -larst build/libs
 
     #- name: Build and push
     #  run: |
